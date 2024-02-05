@@ -18,7 +18,7 @@ all: $(TEXSRC)
 	@$(TEXCOMPILE) $(TEXFLAGS) $(TEXNAME).tex
 	@for aux in $(shell find . -name "*.aux"); do $(BIBCOMPILE) $$aux;  done
 	@$(TEXCOMPILE) $(TEXFLAGS) $(TEXNAME).tex 
-	# @$(TEXCOMPILE) $(TEXFLAGS) $(TEXNAME).tex 
+	@$(TEXCOMPILE) $(TEXFLAGS) $(TEXNAME).tex 
 	@mv $(TEXBUILD)/$(TEXNAME).pdf $(OUTNAME).pdf
 
 clean:
