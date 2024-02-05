@@ -3,13 +3,12 @@
 
 TEXSRC = $(shell find . -name "*.tex")
 TEXSRC += $(shell find . -name "*.bib")
-TARGET := $(patsubst %.tex,%.pdf,$(SRC))
 TEXBUILD := build
 TEXCOMPILE := latexmk -pdf
 BIBCOMPILE := bibtex
 TEXNAME := template
 OUTNAME := template
-TEXFLAGS := -shell-escape -interaction=nonstopmode -output-directory=$(TEXBUILD) -file-line-error
+TEXFLAGS := -interaction=nonstopmode -output-directory=$(TEXBUILD) -file-line-error
 TEXFILES := acn acr alg aux bbl blg def defdvi fdb_latexmk fls glg glo gls ist lof log lot out synctex.gz toc 
 
 .PHONY: all clean
@@ -17,8 +16,6 @@ all: $(TEXSRC)
 	@mkdir -p $(TEXBUILD)
 	@$(TEXCOMPILE) $(TEXFLAGS) $(TEXNAME).tex
 	@for aux in $(shell find . -name "*.aux"); do $(BIBCOMPILE) $$aux;  done
-	@$(TEXCOMPILE) $(TEXFLAGS) $(TEXNAME).tex 
-	@$(TEXCOMPILE) $(TEXFLAGS) $(TEXNAME).tex 
 	@mv $(TEXBUILD)/$(TEXNAME).pdf $(OUTNAME).pdf
 
 clean:

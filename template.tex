@@ -9,7 +9,7 @@
 \usepackage{url}
 \usepackage{verbatim}
 \usepackage{graphicx}
-\usepackage{svg}
+% \usepackage{svg}
 \usepackage{booktabs,threeparttable}
 \hyphenation{op-tical net-works semi-conduc-tor IEEE-Xplore}
 % updated with editorial comments 8/9/2021
@@ -146,7 +146,7 @@ The basic concept of virtual memory is that you map the virtual address the proc
 physical address in physical memory. This means that two processes can access the same virtual address
 in their address space but get two different results since the addresses point to different
 places in the physical memory. This again means that each process can use all of its 32-bit
-address space while still ensuring that no other processes can access its data \cite{TanenbaumAndrewS.2024Mos}
+address space while still ensuring that no other processes can access its data~\cite{TanenbaumAndrewS.2024Mos}
 
 \bigskip
 
@@ -160,12 +160,12 @@ The following snippet shows how to import figures.
 	\label{fig:block_diagram}
 \end{figure}
 
-\begin{figure}[htbp]
-	\centering
-	\includesvg[scale=0.5]{figures/NVSD_VDD_IN.svg}
-	\caption{Total power consumption compared between NAS and SD-Card\newline \emph{Note} the NAS-experiment did not complete in time, and the measurements for the NAS fit to the SD-card measurements}
-	\label{fig:local_nas_sd_compare}
-\end{figure}
+% \begin{figure}[htbp]
+% 	\centering
+% 	\includegraphics[scale=0.5]{figures/NVSD_VDD_IN.svg}
+% 	\caption{Total power consumption compared between NAS and SD-Card\newline \emph{Note} the NAS-experiment did not complete in time, and the measurements for the NAS fit to the SD-card measurements}
+% 	\label{fig:local_nas_sd_compare}
+% \end{figure}
 
 \begin{figure}[htbp]
 	\begin{center}

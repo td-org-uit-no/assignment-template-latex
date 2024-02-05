@@ -1,11 +1,11 @@
 ### -- Custom Template --------------------------------------------------------
-$ENV{'TEXINPUTS'}='./IEEEtran//:' . $ENV{'TEXINPUTS'}; 
+# $ENV{'TEXINPUTS'}='./IEEEtran//:' . $ENV{'TEXINPUTS'}; 
 # $ENV{'TEXINPUTS'}='../uit-thesis//:' . $ENV{'TEXINPUTS'}; 
 
 ### -- Output options --------------------------------------------------------
 
-$quiet  = 1;
-$silent = 1;
+#$quiet  = 1;
+#$silent = 1;
 
 # -- Build options -----------------------------------------------------------
 
