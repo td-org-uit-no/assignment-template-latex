@@ -9,7 +9,7 @@ This repository provides a simple LaTeX template for writing your Assignments at
 
 ### Build PDFs locally 
 
-Once you have installed [LaTeX](https://www.latex-project.org/) and [Inkscape](https://inkscape.org/), you can use it like this:
+Once you have installed [LaTeX](https://www.latex-project.org/), you can use it like this:
 
 ```console
 # Creates `template.pdf` in working directory.
