@@ -1,22 +1,16 @@
 # 	Makefile for compiling assignment latex template	\
-	Dependencies: [texlive(full),inkscape]
+	Dependencies: [texlive(full)]
 
-TEXSRC = $(shell find . -name "*.tex")
-TEXSRC += $(shell find . -name "*.bib")
-TEXBUILD := build
-TEXCOMPILE := latexmk -pdf
-BIBCOMPILE := bibtex
-TEXNAME := template
-OUTNAME := template
-TEXFLAGS := -interaction=nonstopmode -output-directory=$(TEXBUILD) -file-line-error
-TEXFILES := acn acr alg aux bbl blg def defdvi fdb_latexmk fls glg glo gls ist lof log lot out synctex.gz toc 
+SRC := $(shell find . -name '*.tex')
+TARGET := $(patsubst %.tex,%.pdf,$(SRC))
+BUILD_DIR := ./build
 
 .PHONY: all clean
-all: $(TEXSRC)
-	@mkdir -p $(TEXBUILD)
-	@$(TEXCOMPILE) $(TEXFLAGS) $(TEXNAME).tex
-	@for aux in $(shell find . -name "*.aux"); do $(BIBCOMPILE) $$aux;  done
-	@mv $(TEXBUILD)/$(TEXNAME).pdf $(OUTNAME).pdf
+all:
+	@mkdir -p $(BUILD_DIR)
+	latexmk -pdf -interaction=nonstopmode -output-directory=$(BUILD_DIR) -file-line-error $(SRC)
+	@mv $(BUILD_DIR)/$(notdir $(TARGET)) $(TARGET)
 
 clean:
-	@rm -rf $(TEXBUILD) $(addsuffix .pdf, ${TEXNAME} ${OUTNAME}) $(addprefix *., ${TEXFILES})
+	latexmk -c $(SRC)
+
