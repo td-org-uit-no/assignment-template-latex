@@ -2,18 +2,44 @@
 \usepackage{amsmath,amsfonts}
 \usepackage{algorithmic}
 \usepackage{algorithm}
-\usepackage{array}
 \usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
 \usepackage{textcomp}
 \usepackage{stfloats}
 \usepackage{url}
-\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage{booktabs,threeparttable}
 \hyphenation{op-tical net-works semi-conduc-tor IEEE-Xplore}
 % updated with editorial comments 8/9/2021
 \usepackage{biblatex}
 \addbibresource{references.bib}
+
+
+% Syntax highlighting
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{codeorange}{rgb}{0.9,0.45,0.3}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{cStyle}{  
+    language=C, % Identifiers from C
+	alsoletter={\{,\}},
+    commentstyle=\color{codegreen}, % Green comments, like we used to
+    keywordstyle=\color{blue}, % Blue keywords like 'int'
+    numberstyle=\tiny\color{codegray}, % Grey numbers
+    numbers=left, % Line number on left side 
+    stringstyle=\color{codeorange}, % Strings look orange
+    basicstyle=\ttfamily\footnotesize, % Same size for code as footnotes
+    captionpos=t, % Caption on top
+    xleftmargin=2em, % Margin on left side
+    showstringspaces=false, % Don't show whitespaces
+    tabsize=4, % Who doesn't use tabsize=4?
+	emph=[1]{auto,break,case,char,const,continue,default,do, double, else, enum, extern, float, for, goto, if, int, long, register, return, short, signed, sizeof, static, struct, switch, typedef, union, unsigned, void, volatile, while, \{,\}},
+    emphstyle=[1]{\color{codepurple}}, % Color keywords purple
+    frame=lines, % Put the snippet within horizontal lines
+}
 
 \begin{document}
 
@@ -46,13 +72,6 @@
 		userName@github
 	}
 }
-%\author{FirstName MiddleName(s) LastName, abc@uit.no, git username
-% <-this % stops a space
-%\thanks{This paper was produced by the IEEE Publication Technology Group.}}% <-this % stops a space
-%\thanks{Manuscript received April 19, 2021; revised August 16, 2021.}}
-
-% The paper headers
-%\markboth{Journal of \LaTeX\ Class Files,~Vol.~14, No.~8, August~2021}%
 \markboth{INF-xxxx Assignment X \today}%
 {Shell \MakeLowercase{\textit{et al.}}: A Sample Article Using IEEEtran.cls for IEEE Journals}
 
@@ -65,8 +84,6 @@
 
 	While writing this report template, I enjoyed reading Michael Alley's `The Craft of Scientific Writing'. I recommend having it by your side when you are stuck writing- it happens to all of us \cite{AlleyMichael2018TCoS}.
 
-	\bigskip
-
 	Make sure you clean up the template text before submitting your report. ;)
 \end{abstract}
 
@@ -78,7 +95,6 @@
 \label{Section:Introduction}
 This section should be brief. Describe the assignment and the requirements in your own words. Avoid listing the requirements directly.
 
-\bigskip
 
 There are many opinions on first person speaking when writing a technical report. In general:
 
@@ -98,7 +114,6 @@ There are many opinions on first person speaking when writing a technical report
 
 Mixing these in your reports is not uncommon, and people like Einstein, Feynman, and Curie frequently used both forms in their texts.
 
-\bigskip
 
 Here are some examples of how to start your introduction:
 
@@ -131,11 +146,8 @@ The rest of this paper is organized as follows:
 This section is where you provide information on the theoretical aspects of your design.
 You can usually assume that the theory required to solve the assignment is known to the reader, but if you want to clarify terms or go into detail about specific points in the theory (if you are doing something slightly different, or a detail of it is of notable importance to your implementation), consider writing a few words about it here.
 
-\bigskip
 
 We want you to write a short section explaining the most important background information required to read and understand the rest of the report.
-
-\bigskip
 
 Here is an example of a subsection covering a topic.
 
@@ -147,8 +159,6 @@ in their address space but get two different results since the addresses point t
 places in the physical memory. This again means that each process can use all of its 32-bit
 address space while still ensuring that no other processes can access its data~\cite{TanenbaumAndrewS.2024Mos}
 
-\bigskip
-
 Using figures in technical backgrounds is encouraged, if that makes the concept easier to explain. Usually, you want figures/images as Scaleable Vector Graphics(SVG) or Portable Document Format(PDF), especially for your graphs. Sometimes that is not doable, and you can use portable network graphics(PNG) or similar.
 The following snippet shows how to import figures.
 
@@ -158,14 +168,6 @@ The following snippet shows how to import figures.
 	\caption{Block diagram of the Jetson Xavier NX}
 	\label{fig:block_diagram}
 \end{figure}
-
-% NOTE: Requires \usepackage{svg} and Inkscape installed
-% \begin{figure}[htbp]
-% 	\centering
-% 	\includesvg[scale=0.5]{figures/NVSD_VDD_IN.svg}
-% 	\caption{Total power consumption compared between NAS and SD-Card\newline \emph{Note} the NAS-experiment did not complete in time, and the measurements for the NAS fit to the SD-card measurements}
-% 	\label{fig:local_nas_sd_compare}
-% \end{figure}
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -178,22 +180,32 @@ The following snippet shows how to import figures.
 \section{Design}
 \label{Section:Design}
 This is where you describe how you solved the assignment, at least on paper. Give a high-level view of your design.
-As a rule of thumb, if you find yourself describing code, you need to go to a higher abstraction level.
+As a rule of thumb, if you find yourself describing code, you need to go to a higher abstraction level. If you for some reson want to write code you can use the `listings' package as seen in \autoref{strcpy}
 
-
-\bigskip
+\begin{figure}[h]
+	\begin{lstlisting}[language=C, style=cStyle]
+/* Simple copy from src to dest */
+char *strcpy(char *restrict dest,
+		const char *restrict src)
+{
+    char *destorig = dest;
+    for (;; dest++, src++) {
+		char copiedchar = *dest = *src;
+		if (!copiedchar) break;
+    }
+	printf("Strings are orange\n");
+    return destorig;
+}
+\end{lstlisting}
+	\caption{An implementation of \lstinline{strcpy} in C}
+	\label{strcpy}
+\end{figure}
 
 This section is also a good place to put illustrations to enhance the text.
 There are multiple tools out there to create good illustrations.
 draw.io is a strong tool that can be run in a browser. There are stronger, free tools, such as Yed Graph Editor, for more advanced users.
 
-
-\bigskip
-
 While illustrations can help make your report clearer and look more polished, avoid using them to fill up space if you can convey the same information clearly using just text.
-
-
-\bigskip
 
 Examples of what the design section should cover:
 
@@ -203,7 +215,6 @@ Examples of what the design section should cover:
 	\item The server parses incoming data requests into an SQL query and runs them on its database. The result is then processed into JSON and returned to the client.
 \end{itemize}
 
-\bigskip
 
 Remember to avoid low-level details! An expert should in theory be able to implement your design in any programming language based on what you write in this section.
 
@@ -218,8 +229,6 @@ You may want to include a short section giving high-level details about your imp
 \section{Experiments and Results}
 \label{Section:Experiments and Results}
 A core pillar of computer science is testing. In this section, you should include your methodology for testing your implementation. How do you know your implementation meets the requirements? What sort of performance metrics have you chosen to benchmark your solution, and how did you go about performing tests to gather those metrics?
-
-\bigskip
 
 You should present the results of your tests here, either using an illustration and/or a table of results. These will be valuable in the discussion section.
 The following is an example for how to format a table of results in \LaTeX.
@@ -242,15 +251,12 @@ The following is an example for how to format a table of results in \LaTeX.
 \end{table}
 
 
-\bigskip
-
 If presenting data and benchmarks are not important to the assignment, you may likely find yourself cutting this section. If you decide to do so, make sure you at least mention your correctness criteria and testing methodology somewhere else.
 
 \section{Discussion}
 \label{Section:Discussion}
 The discussion section is the most important section in a report, This is where you show that you understand the theory behind the solution, and also a chance to argue the pros and cons of your solution. You should discuss about the results of your measurements and why you think they are the way they are. Also bring up tradeoffs, and why you made the choices you did; show that you understand the alternatives, and why they may be a good idea (or not) for the particular problem the assignment asked you to solve.
 
-\bigskip
 
 Here is an example of a discussion subsection:
 
