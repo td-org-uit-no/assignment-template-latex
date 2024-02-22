@@ -1,4 +1,4 @@
-name: Build and release thesis
+name: Build and release pdf
 
 on:
   push:
@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  build-pdf:
+  release-pdf:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
