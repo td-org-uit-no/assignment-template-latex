@@ -17,5 +17,5 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
-          root_file: template.tex
+          root_file: src/template.tex
           args: -pdf -shell-escape -interaction=nonstopmode -output-directory=build
