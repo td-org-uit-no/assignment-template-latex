@@ -29,4 +29,4 @@ The project uses GitHub Actions to build the LaTeX document and create a release
 
 ## Credits
 
-This template is using the [IEEE-Tran](https://www.ieee.org/conferences/publishing/templates.html) `cls` file.
+This template is using the [IEEEtran](https://www.ieee.org/conferences/publishing/templates.html) `cls` file.
